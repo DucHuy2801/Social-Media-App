@@ -13,8 +13,8 @@ export const databaseProviders = [
                 host: 'localhost',
                 port: 3306,
                 username: 'root',
-                password: 'duchuy28012002',
-                database: 'social_media',
+                password: process.env.DB_PASSWORD,
+                database: process.env.DB_DATABASE,
             });
             sequelize.addModels([
                 UserEntity, 
@@ -22,7 +22,6 @@ export const databaseProviders = [
                 LikeEntity, 
                 PostEntity, 
                 StoryEntity,
-                // RelationshipEntity
             ]);
             await sequelize.sync();
             return sequelize

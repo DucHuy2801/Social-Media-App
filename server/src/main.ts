@@ -18,10 +18,10 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document)
 
   await app
-    .listen(5000)
+    .listen(process.env.PORT)
     .then(() => {
       console.log(
-        `Application is running on: Swagger UI: http://localhost:5000/api`
+        `Application is running on: Swagger UI: http://localhost:${process.env.PORT}/api`
       );
     })
     .catch((err) => {

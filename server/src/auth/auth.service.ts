@@ -7,6 +7,7 @@ import { RegisterDto } from './dto/register.dto';
 import { ErrorException } from 'src/utils/error';
 import * as bcrypt from 'bcrypt'
 import { LoginDto } from './dto/login.dto';
+import jwt from 'jsonwebtoken'
 
 @Injectable()
 export class AuthService {
@@ -48,11 +49,24 @@ export class AuthService {
 
     async login(dto: LoginDto) {
         const { username, password } = dto
-        const existUsername = await this.userRepository.findOne({
-            where: { username: username }
-        })
-        if (existUsername) throw new ErrorException("Username is existed!", HttpStatus.BAD_REQUEST)
+        const user = await this.userRepository
+            .createQueryBuilder()
+            .where('username = :username', { username })
+            .getOne();
 
+        if (!user) throw new ErrorException("Username doesn't exist!", HttpStatus.BAD_REQUEST,)
 
+        const match_password = await bcrypt.compare(password, user.password)
+        if (!match_password) throw new ErrorException("Password is wrong!", HttpStatus.BAD_REQUEST)
+
+        const token = jwt.sign({
+            id: user.id,
+            user_name: user.username,
+            email: user.email
+        }, process.env.SECRET_KEY)
+
+        return {
+            access_token: token
+        }
     }
 }

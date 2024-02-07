@@ -18,19 +18,19 @@ import { StoryEntity } from './entity/story.entity';
 
 @Module({
     imports: [
-        ConfigModule,
+        ConfigModule.forRoot(),
         TypeOrmModule.forRoot({
             type: 'mysql',
             host: 'localhost',
             port: 3306,
-            username: 'root',
-            password: 'duchuy28012002',
-            database: 'social_media',
+            username: process.env.DB_USERNAME,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_DATABASE,
             entities: [
-                UserEntity, 
-                CommentEntity, 
-                LikeEntity, 
-                PostEntity, 
+                UserEntity,
+                CommentEntity,
+                LikeEntity,
+                PostEntity,
                 StoryEntity
             ],
             synchronize: true,
