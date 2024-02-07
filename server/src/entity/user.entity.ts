@@ -23,17 +23,17 @@ export class UserEntity extends Model {
     @Column({ type: 'varchar', length: 45, nullable: false })
     name: string
 
-    @Column({ type: 'varchar', length: 100 })
+    @Column({ type: 'varchar', length: 100, nullable: true })
     cover_picture: string
 
-    @Column({ type: 'varchar', length: 100 })
+    @Column({ type: 'varchar', length: 100, nullable: true })
     profile_picture: string
 
 
-    @Column({ type: 'varchar', length: 45 })
+    @Column({ type: 'varchar', length: 45, nullable: true})
     city: string
 
-    @Column({ type: 'varchar', length: 45 })
+    @Column({ type: 'varchar', length: 45, nullable: true})
     website: string
 
     @OneToMany(() => PostEntity, post => post.user)

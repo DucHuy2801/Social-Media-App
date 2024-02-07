@@ -42,8 +42,7 @@ export class AuthService {
         const result = await this.userRepository.save(new_user)
 
         return {
-            message: "Register successfully!",
-            data: result
+            message: "Register successfully!"
         }
     }
 
@@ -59,11 +58,11 @@ export class AuthService {
         const match_password = await bcrypt.compare(password, user.password)
         if (!match_password) throw new ErrorException("Password is wrong!", HttpStatus.BAD_REQUEST)
 
-        const token = jwt.sign({
+        const token = this.jwtService.sign({
             id: user.id,
             user_name: user.username,
-            email: user.email
-        }, process.env.SECRET_KEY)
+            email: user.email,
+        });
 
         return {
             access_token: token
