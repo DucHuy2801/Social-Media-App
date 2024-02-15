@@ -15,6 +15,7 @@ import { UserModule } from './user/user.module';
 import { CommentEntity, PostEntity, UserEntity } from './entity';
 import { LikeEntity } from './entity/like.entity';
 import { StoryEntity } from './entity/story.entity';
+import { RelationshipEntity } from './entity/relationship.entity';
 
 @Module({
     imports: [
@@ -31,7 +32,8 @@ import { StoryEntity } from './entity/story.entity';
                 CommentEntity,
                 LikeEntity,
                 PostEntity,
-                StoryEntity
+                StoryEntity,
+                RelationshipEntity
             ],
             synchronize: true,
         }),
@@ -43,7 +45,7 @@ import { StoryEntity } from './entity/story.entity';
         StoryModule,
         UserModule
     ],
-    controllers: [AppController, PostController],
-    providers: [AppService, PostService],
+    controllers: [AppController],
+    providers: [AppService],
 })
 export class AppModule { }
