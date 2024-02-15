@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/entity';
@@ -7,7 +7,6 @@ import { RegisterDto } from './dto/register.dto';
 import { ErrorException } from 'src/utils/error';
 import * as bcrypt from 'bcrypt'
 import { LoginDto } from './dto/login.dto';
-import jwt from 'jsonwebtoken'
 
 @Injectable()
 export class AuthService {
@@ -67,5 +66,38 @@ export class AuthService {
         return {
             access_token: token
         }
+    }
+
+    async verifyTokenAndGetUser(token: string): Promise<UserEntity> {
+        const decoded_token = this.verifyToken(token)
+        const user = await this.userRepository.findOne(decoded_token.id)
+
+        if (!user) {
+            throw new UnauthorizedException("Token is not valid!")
+        }
+        return user
+    }
+
+    private verifyToken(token: string): any {
+        try {
+            const decoded_token = this.jwtService.verify(token)
+            return decoded_token
+        } catch (error) {
+            throw new UnauthorizedException("Token is not valid")
+        }
+    }
+
+    async validateUser(payload: any) {
+        const userId = payload.sub
+
+        const user = await this.userRepository.findOne({
+            where: {
+                id: userId
+            }
+        })
+
+        if (!user)
+            return null
+        return user
     }
 }
