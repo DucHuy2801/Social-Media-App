@@ -7,8 +7,6 @@ import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { CommentModule } from './comment/comment.module';
 import { LikeModule } from './like/like.module';
-import { PostController } from './post/post.controller';
-import { PostService } from './post/post.service';
 import { PostModule } from './post/post.module';
 import { StoryModule } from './story/story.module';
 import { UserModule } from './user/user.module';

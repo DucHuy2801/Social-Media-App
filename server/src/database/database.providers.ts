@@ -21,7 +21,7 @@ export const databaseProviders = [
                 CommentEntity, 
                 LikeEntity, 
                 PostEntity, 
-                StoryEntity,
+                StoryEntity
             ]);
             await sequelize.sync();
             return sequelize
