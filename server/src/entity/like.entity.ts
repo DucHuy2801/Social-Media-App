@@ -1,5 +1,5 @@
 import { Table, Model } from 'sequelize-typescript'
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm'
 import { UserEntity } from './user.entity'
 import { PostEntity } from './post.entity'
 
@@ -10,8 +10,10 @@ export class LikeEntity extends Model {
     id: number
 
     @ManyToOne(() => UserEntity, user => user.likes)
+    @JoinColumn({ name: "user_id" })
     user: UserEntity
 
+    @JoinColumn({ name: "post_id"})
     @ManyToOne(() => PostEntity, post => post.likes)
     post: PostEntity;
 }
