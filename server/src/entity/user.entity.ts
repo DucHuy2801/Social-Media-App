@@ -4,6 +4,7 @@ import { PostEntity } from './post.entity'
 import { CommentEntity } from './comment.entity'
 import { StoryEntity } from './story.entity'
 import { LikeEntity } from './like.entity'
+import { RelationshipEntity } from './relationship.entity'
 
 @Table
 @Entity('user')
@@ -45,11 +46,11 @@ export class UserEntity extends Model {
     @OneToMany(() => StoryEntity, story => story.user)
     stories: StoryEntity[]
 
-    // @OneToMany(() => RelationshipEntity, follow => follow.follower)
-    // followings: RelationshipEntity[];
+    @OneToMany(() => RelationshipEntity, follow => follow.follower)
+    followings: RelationshipEntity[];
 
-    // @OneToMany(() => RelationshipEntity, follower => follower.following)
-    // followers: RelationshipEntity[];
+    @OneToMany(() => RelationshipEntity, follower => follower.following)
+    followers: RelationshipEntity[];
 
     @OneToMany(() => LikeEntity, like => like.user)
     likes: LikeEntity

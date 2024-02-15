@@ -1,5 +1,5 @@
 import { Table, Model } from 'sequelize-typescript'
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm'
 import { UserEntity } from './user.entity'
 import { CommentEntity } from './comment.entity'
 import { LikeEntity } from './like.entity'
@@ -17,6 +17,7 @@ export class PostEntity extends Model {
     image: string
 
     @ManyToOne(() => UserEntity, user => user.posts)
+    @JoinColumn({ name: "user_id" })
     user: UserEntity
 
     @OneToMany(() => CommentEntity, comment => comment.post)
